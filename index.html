@@ -1,0 +1,188 @@
+
+<html>
+<head>
+    <title>Signup Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('ironman.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            
+            let firstName = document.getElementById("firstName").value;
+            let lastName = document.getElementById("lastName").value;
+            let email = document.getElementById("email").value;
+            let dob = document.getElementById("dob").value;
+            let age = document.getElementById("age").value;
+            let gender = document.querySelector('input[name="gender"]:checked');
+            let phone = document.getElementById("phone").value;
+            let address = document.getElementById("address").value;
+            
+            let namePattern = /^[A-Za-z]{4,}$/;
+            let lastNamePattern = /^[A-Za-z]{1,}$/;
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            let phonePattern = /^\d{10}$/;
+            let agePattern = /^\d{2}$/;
+            
+            if (!namePattern.test(firstName)) {
+                alert("First Name should contain only alphabets and be at least 4 characters long.");
+                return false;
+            }
+            if (!lastNamePattern.test(lastName)) {
+                alert("Last Name should contain only alphabets and be at least 1 character long.");
+                return false;
+            }
+            if (!emailPattern.test(email)) {
+                alert("Enter a valid email in the format name@domain.com.");
+                return false;
+            }
+            if (!dob) {
+                alert("Please enter a valid date of birth.");
+                return false;
+            }
+            if (!agePattern.test(age)) {
+                alert("Age should be a two-digit number.");
+                return false;
+            }
+            if (!gender) {
+                alert("Please select a gender.");
+                return false;
+            }
+            if (!phonePattern.test(phone)) {
+                alert("Phone number should be exactly 10 digits.");
+                return false;
+            }
+            if (address.trim() === "") {
+                alert("Address cannot be empty.");
+                return false;
+            }
+            
+            document.getElementById("signupTable").innerHTML = `
+                <tr>
+                    <th>First Name</th>
+                    <td>${firstName}</td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td>${lastName}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>${email}</td>
+                </tr>
+                <tr>
+                    <th>Date of Birth</th>
+                    <td>${dob}</td>
+                </tr>
+                <tr>
+                    <th>Age</th>
+                    <td>${age}</td>
+                </tr>
+                <tr>
+                    <th>Gender</th>
+                    <td>${gender.value}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td>${phone}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>${address}</td>
+                </tr>`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">Signup Form</h2>
+        <form id="signupForm" onsubmit="validateForm(event)">
+            <label>First Name</label>
+            <input type="text" id="firstName" required>
+            
+            <label>Last Name</label>
+            <input type="text" id="lastName" required>
+            
+            <label>Email</label>
+            <input type="email" id="email" required>
+            
+            <label>Date of Birth</label>
+            <input type="date" id="dob" required>
+            
+            <label>Age</label>
+            <input type="number" id="age" required>
+            
+            <label>Gender</label>
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            
+            <label>Phone Number</label>
+            <input type="text" id="phone" required>
+            
+            <label>Address</label>
+            <textarea id="address" required></textarea>
+            
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+    <table>
+        <tbody id="signupTable"></tbody>
+    </table>
+</body>
+</html>
